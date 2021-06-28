@@ -1,0 +1,94 @@
+﻿@model MovieRates.Models.Filmes
+
+@{ ViewData["Title"] = "Details"; }
+
+<h1>Detalhes</h1>
+
+<div>
+    <hr />
+    <div style="float:left; margin-right:20px;  margin-top:10px; border:4px solid black">
+        <img src="~/fotos/@Html.DisplayFor(model => model.Capa)"
+             width="200" />
+    </div>
+    <div style="line-height:2;  ">
+        <b> Titulo:</b>
+        @Html.DisplayFor(model => model.Titulo) <br />
+
+        <b> Data de Lançamento: </b>
+        @Html.DisplayFor(model => model.Data)<br />
+
+        <b> Realizador:</b>
+        @Html.DisplayFor(model => model.Realizador)<br />
+
+        <b> Elenco:</b>
+        @Html.DisplayFor(model => model.Elenco)<br />
+
+        <a style="font-weight: bold" href="@Html.DisplayFor(model => model.Link)"><b>Visualização do Site</b></a><br />
+
+        <b> Duração:</b>
+        @Html.DisplayFor(model => model.Duracao)<br />
+
+        <b> Pontuação:</b>
+        @Html.DisplayFor(model => model.Pontuacao)<br />
+
+        <b> Sinopse:</b>
+        @Html.DisplayFor(model => model.Descricao)<br /> <br /><br /> <br />
+
+        @if (User.IsInRole("Gestor")) {
+    <div>
+        <button class="btn btn-primary" onclick="location.href = '@Url.Action("Delete", "Filmes", new { id = Model.IdFilmes })'">Eliminar Filme</button>
+    </div><br />}
+
+
+    </div>
+
+
+    <div>
+        @if (User.Identity.IsAuthenticated) {
+
+<form asp-action="CreateComentario">
+    <input type="hidden" name="IdFilmes" value="@Model.IdFilmes" />
+    <span>Rating: </span><input required type="number" name="rating" min="1" max="10" maxlength="2" placeholder="1" /><br /><br />
+    <span>Comentario:</span><br />
+    <textarea required name="comentario" style="resize:none; width:900px; height:100px;"></textarea><br />
+    <div style="float: right; width:36%">
+        <input type="submit" value="Adicionar Comentrario" class="btn btn-primary" />
+    </div><br /><br />
+</form>}
+    </div>
+
+<div id="comentarios" style="width:80%">
+    @foreach (var item in Model.ListaDeFilmes) {
+        @if (item.Visibilidade == true) {
+    <div style="border: 3px solid black; background-color: cyan;
+        padding-top: 2px; padding-right: 3px; padding-bottom: 5px; padding-left: 5px;">
+
+        <span style="font-weight:bold; font-size:medium;">  Utilizador: </span> @item.Utilizador.Email
+        <span style="font-weight:bold; font-size:medium; float:right; margin-right:5px">  Pontuação: @item.Pontuacao</span><br />
+
+        <span style="font-weight:bold; font-size:medium">  Comentario: </span>@Html.Raw(item.Comentario) <br />
+        <span style="font-weight:bold; font-size:medium">  Data: </span>@item.Data <br />
+
+    </div><br />
+    @if (User.IsInRole("Gestor")) {
+    <div>
+        <button class="btn btn-primary" onclick="location.href = '@Url.Action("Delete", "Reviews", new { id = item.IdReview })'">Eliminar</button>
+    </div><br />
+        }
+    }
+}<br /><br />
+
+</div>
+
+</div>
+@if (User.IsInRole("Gestor")) {
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.IdFilmes">Editar</a>
+</div>
+}
+<div>
+    <a asp-action="Index">Voltar</a>
+</div>
+
+
+

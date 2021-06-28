@@ -96,21 +96,14 @@ namespace MovieRates.Areas.Identity.Pages.Account {
                 if (result.Succeeded) {
                     _logger.LogInformation("User created a new account with password.");
 
-                    //await _userManager.AddToRoleAsync(user, "Utilizador");
-
-
-
                     //*************************************************************
-                    // Vamos proceder à operação de guardar os dados do Criador
+                    // Vamos proceder à operação de guardar os dados do Utilizador
                     //*************************************************************
-                    // preparar os dados do Criador para serem adicionados à BD
-                    // atribuir ao objeto 'criador' o email fornecido pelo utilizador,
-                    // a quando da escreita dos dados na interface
-                    // exatamente a mesma tarefa feita na linha 128
-
+                    // preparar os dados do Utilizador para serem adicionados à BD
+                    // atribuir ao objeto 'utilizador' o email fornecido pelo utilizador,
                     // adicionar o ID do utilizador,
                     // para formar uma 'ponte' (foreign key) entre
-                    // os dados da autenticação e os dados do 'negócio'
+                    // os dados da autenticação e o Utilizador
 
 
                     // estamos em condições de guardar os dados na BD
@@ -128,10 +121,7 @@ namespace MovieRates.Areas.Identity.Pages.Account {
                     }
 
                     try {
-                        //_context.Add(Input.Utilizador); // adicionar o Criador
-                        //await _context.SaveChangesAsync(); // 'commit' da adição
-                        // Enviar para o utilizador para a página de confirmação da criaçao de Registo
-                        //return RedirectToPage("RegisterConfirmation");
+                        
 
                         await _context.AddAsync(utilizador);
                         await _context.SaveChangesAsync(); // 'commit' da adição
@@ -141,36 +131,13 @@ namespace MovieRates.Areas.Identity.Pages.Account {
                         // avisar que houve um erro
 
                         ModelState.AddModelError("", "Ocorreu um erro na criação de dados");
-                        // deverá ser apagada o User q foi previamente criador
+                        // deverá ser apagada o User que foi previamente criado
                         await _userManager.DeleteAsync(user);
 
                         // devolver dados à pagina
                         return Page();
                     }
 
-
-
-
-                    /*var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-                    var callbackUrl = Url.Page(
-                        "/Account/ConfirmEmail",
-                        pageHandler: null,
-                        values: new { area = "Identity", userId = user.Id, code = code, returnUrl = returnUrl },
-                        protocol: Request.Scheme);
-
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
-
-                    if (_userManager.Options.SignIn.RequireConfirmedAccount)
-                    {
-                        return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
-                    }
-                    else
-                    {
-                        await _signInManager.SignInAsync(user, isPersistent: false);
-                        return LocalRedirect(returnUrl);
-                    }*/
                 }
                 foreach (var error in result.Errors) {
                     ModelState.AddModelError(string.Empty, error.Description);

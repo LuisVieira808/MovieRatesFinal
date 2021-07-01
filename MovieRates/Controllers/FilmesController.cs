@@ -86,8 +86,9 @@ namespace MovieRates.Controllers
             //recolher dados do utilizador
             var utilizador = _context.Utilizadores.Where(u => u.UserNameId == _userManager.GetUserId(User)).FirstOrDefault();
 
-            //variavel que contem os dados da review, do utilizador e sobre qual filme foi feita review
-            var comment = new Reviews {
+            if (utilizador.ControlarReview == false) {
+                //variavel que contem os dados da review, do utilizador e sobre qual filme foi feita review
+                var comment = new Reviews {
                 FilmesFK = IdFilmes,
                 Comentario = comentario.Replace("\r\n", "<br />"),
                 Pontuacao = rating,
@@ -95,14 +96,50 @@ namespace MovieRates.Controllers
                 Visibilidade = true,
                 Utilizador = utilizador
             };
-
+                //adiciona a review à Base de Dados
                 _context.Reviews.Add(comment);
-                //Salva as alterações na Base de Dados
+                //o utilizador já fez a sua review
+                utilizador.ControlarReview = true;
+                //guardar a alteração na Base de Dados
+                _context.Utilizadores.Update(utilizador);
+                //Guarda as alterações na Base de Dados
                 await _context.SaveChangesAsync();
                 //redirecionar para a página dos details do filme
                 return RedirectToAction(nameof(Details),new { id = IdFilmes});
+            } else {
+                return RedirectToAction(nameof(Details), new { id = IdFilmes });
+            }
+            
+            
         }
 
+        public async Task<IActionResult> AdicionarFavoritos(int IdFilmes) {
+            //recolher dados do utilizador
+            var utilizador = _context.Utilizadores.Where(u => u.UserNameId == _userManager.GetUserId(User)).FirstOrDefault();
+
+            var favorito = await _context.Favoritos.Where(f => f.FilmesFK == IdFilmes && f.UtilizadoresFK == utilizador.IdUtilizador).FirstOrDefaultAsync();
+
+            if (favorito == null) {
+                //variavel que contem dados do utilizador e do filme 
+                var fav = new Favoritos {
+                    FilmesFK = IdFilmes,
+                    UtilizadoresFK = utilizador.IdUtilizador
+                };
+                //Adiciona o filme à Base de Dados
+                _context.Favoritos.Add(fav);
+                //Guarda as alterações na Base de Dados
+                await _context.SaveChangesAsync();
+                //redirecionar para a página dos details do filme
+                return RedirectToAction(nameof(Details), new { id = IdFilmes });
+            } else {
+                //remove da base de dados 
+                _context.Favoritos.Remove(favorito);
+                //Guarda as alterações na Base de Dados
+                await _context.SaveChangesAsync();
+                //redirecionar para a página dos details do filme
+                return RedirectToAction(nameof(Details), new { id = IdFilmes });
+            }
+        }
 
         // GET: Filmes/Create
         public IActionResult Create()

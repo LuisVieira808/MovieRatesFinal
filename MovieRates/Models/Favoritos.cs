@@ -18,9 +18,9 @@ namespace MovieRates.Models {
         /// <summary>
         /// Fk para o Utilizador
         /// </summary>
-        [ForeignKey(nameof(Utilizadores))]
+        [ForeignKey(nameof(Utilizador))]
         public int UtilizadoresFK { get; set; }
-        public Categorias Utilizador { get; set; }
+        public Utilizadores Utilizador { get; set; }
 
 
         /// <summary>

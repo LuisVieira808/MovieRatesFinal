@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MovieRates.Data;
 
 namespace MovieRates.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210701163810_FilmesFavoritosF")]
+    partial class FilmesFavoritosF
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -49,14 +51,14 @@ namespace MovieRates.Migrations
                         new
                         {
                             Id = "c",
-                            ConcurrencyStamp = "fe45e94e-3186-4ea4-9798-b460d6db537e",
+                            ConcurrencyStamp = "dbe9c98f-f4e0-45ca-967a-53ce7c42573d",
                             Name = "Cliente",
                             NormalizedName = "CLIENTE"
                         },
                         new
                         {
                             Id = "g",
-                            ConcurrencyStamp = "858632c5-5d5f-4635-b889-6d0438be760d",
+                            ConcurrencyStamp = "b114205d-d3d5-4ca7-94dc-2d4c2f44ccf7",
                             Name = "Gestor",
                             NormalizedName = "GESTOR"
                         });
@@ -362,6 +364,9 @@ namespace MovieRates.Migrations
                     b.Property<int>("FilmesFK")
                         .HasColumnType("int");
 
+                    b.Property<int?>("UtilizadorIdUtilizador")
+                        .HasColumnType("int");
+
                     b.Property<int>("UtilizadoresFK")
                         .HasColumnType("int");
 
@@ -369,7 +374,7 @@ namespace MovieRates.Migrations
 
                     b.HasIndex("FilmesFK");
 
-                    b.HasIndex("UtilizadoresFK");
+                    b.HasIndex("UtilizadorIdUtilizador");
 
                     b.ToTable("Favoritos");
                 });
@@ -984,9 +989,7 @@ namespace MovieRates.Migrations
 
                     b.HasOne("MovieRates.Models.Utilizadores", "Utilizador")
                         .WithMany("ListaDeFavoritos")
-                        .HasForeignKey("UtilizadoresFK")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UtilizadorIdUtilizador");
 
                     b.Navigation("Filme");
 

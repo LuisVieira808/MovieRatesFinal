@@ -21,11 +21,13 @@ namespace MovieRates.Models
         /// <summary>
         /// Comentário do utilizador inscrito sobre o filme
         /// </summary>
+        [Required]
         public string Comentario { get; set; }
 
         /// <summary>
         /// Pontuação que o utilizador dá ao filme
         /// </summary>
+        [Required]
         public int Pontuacao { get; set; }
 
         /// <summary>

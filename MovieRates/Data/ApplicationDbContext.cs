@@ -115,5 +115,6 @@ namespace MovieRates.Data
         public DbSet<FilmeCategorias> FilmeCategorias { get; set; }
         public DbSet<Utilizadores> Utilizadores { get; set; }
         public DbSet<Reviews> Reviews { get; set; }
+        public DbSet<Favoritos> Favoritos { get; set; }
     }
 }

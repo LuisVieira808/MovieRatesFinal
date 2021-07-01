@@ -17,6 +17,7 @@ namespace MovieRates.Models
         public Utilizadores()
         {
             ListaDeReviews = new HashSet<Reviews>();
+            ListaDeFavoritos = new HashSet<Favoritos>();
         }
 
         /// <summary>
@@ -38,10 +39,19 @@ namespace MovieRates.Models
         [EmailAddress(ErrorMessage = "O {0} introduzido não é válido")]
         public string Email { get; set; }
 
+        /// <summary>
+        /// verifica se o utilizador já deu a sua "Review" ao filme
+        /// </summary>
+        public Boolean ControlarReview { get; set; }
 
         /// <summary>
         /// Lista das reviews dos utilizadores
         /// </summary>
         public ICollection<Reviews> ListaDeReviews { get; set; }
+
+        /// <summary>
+        /// Lista dos filmes favoritos dos utilizadores
+        /// </summary>
+        public ICollection<Favoritos> ListaDeFavoritos { get; set; }
     }
 }

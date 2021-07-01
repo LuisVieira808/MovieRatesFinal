@@ -58,7 +58,7 @@ namespace MovieRates.Controllers
 
             var filme = await _context.Filmes
                 .Where(f => f.IdFilmes == id)
-                .Include(f => f.ListaDeFilmes)
+                .Include(f => f.ListaDeReviews)
                 .ThenInclude(r => r.Utilizador)
                 .OrderByDescending(f => f.Data)
                 .FirstOrDefaultAsync();

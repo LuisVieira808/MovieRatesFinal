@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -17,9 +18,15 @@ namespace MovieRates.Controllers
         /// </summary>
         private readonly ApplicationDbContext _context;
 
-        public ReviewsController(ApplicationDbContext context)
+        /// <summary>
+        /// variavel que recolhe os dados da pessoa que se autenticou
+        /// </summary>
+        private readonly UserManager<IdentityUser> _userManager;
+
+        public ReviewsController(ApplicationDbContext context, UserManager<IdentityUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Reviews
@@ -155,6 +162,13 @@ namespace MovieRates.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            //recolher dados do utilizador
+            var utilizador = _context.Utilizadores.Where(u => u.UserNameId == _userManager.GetUserId(User)).FirstOrDefault();
+            //como foi apagada a Review o utilizador pode colocar outra
+            utilizador.ControlarReview = false;
+            //guardar a alteração na Base de Dados
+            _context.Utilizadores.Update(utilizador);
+
             var reviews = await _context.Reviews.FindAsync(id);
             _context.Reviews.Remove(reviews);
             await _context.SaveChangesAsync();

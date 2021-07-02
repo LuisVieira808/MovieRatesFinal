@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace MovieRates.Models
 {
     /// <summary>
-    /// Descrição de um filme
+    /// Descrição          de um filme
     /// </summary>
     public class Filmes
     {

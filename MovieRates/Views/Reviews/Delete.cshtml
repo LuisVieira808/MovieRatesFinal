@@ -48,12 +48,16 @@
          </dd>
      </dl>
 
-     <form asp-action="Delete">
-         <input type="hidden" asp-for="IdReview" />
-         <input type="submit" value="Delete" class="btn btn-danger" /> |
-         <a asp-action="Index">Back to List</a>
-     </form>
- </div> 
- } else {
-    <h1>Página restrita ao Gestor</h1>
- }
+     
+ </div> }
+    else {
+        <h1>Página restrita ao Gestor</h1>
+    }
+
+<form asp-action="Delete">
+    <input type="hidden" asp-for="IdReview" />
+    <input type="submit" value="Delete" class="btn btn-danger" /> |
+    @if (User.IsInRole("Gestor")) {<a asp-action="Index">Back to List</a>}
+</form>
+
+  

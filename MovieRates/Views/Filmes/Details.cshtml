@@ -80,16 +80,19 @@
         <span style="font-weight:bold; font-size:medium">  Data: </span>@item.Data <br />
 
     </div><br />
-                        @if (User.IsInRole("Gestor")) {
+    @if (User.IsInRole("Gestor")) {
     <div>
         <button class="btn btn-primary" onclick="location.href = '@Url.Action("Delete", "Reviews", new { id = item.IdReview })'">Eliminar</button>
-    </div><br /> } @*
+    </div><br /> } 
         @if (User.IsInRole("Cliente")) {
-    <div>
+            if (item.Utilizador.Email == User.Identity.Name) {
+                <div>
         <button class="btn btn-primary" onclick="location.href = '@Url.Action("Edit", "Reviews", new { id = item.IdReview })'">Editar</button>
         <button class="btn btn-primary" onclick="location.href = '@Url.Action("Delete", "Reviews", new { id = item.IdReview })'">Eliminar</button>
     </div><br />
-            }*@}}<br /><br />
+            }
+    
+            }}}<br /><br />
 
     </div>
 

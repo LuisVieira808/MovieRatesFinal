@@ -172,7 +172,7 @@ namespace MovieRates.Controllers
             var reviews = await _context.Reviews.FindAsync(id);
             _context.Reviews.Remove(reviews);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Details), "Filmes", new { id = reviews.FilmesFK });
         }
 
 

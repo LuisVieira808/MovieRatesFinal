@@ -60,8 +60,8 @@
 <div id="comentarios" style="width:80%">
     @foreach (var item in Model.ListaDeFilmes) {
         @if (item.Visibilidade == true) {
-    <div style="border: 3px solid black; background-color: cyan;
-        padding-top: 2px; padding-right: 3px; padding-bottom: 5px; padding-left: 5px;">
+    <div style="border: 3px solid black; background-color:#ece3f7;
+         padding-top: 2px; padding-right: 3px; padding-bottom: 5px; padding-left: 5px;">
 
         <span style="font-weight:bold; font-size:medium;">  Utilizador: </span> @item.Utilizador.Email
         <span style="font-weight:bold; font-size:medium; float:right; margin-right:5px">  Pontuação: @item.Pontuacao</span><br />

@@ -55,7 +55,7 @@ namespace MovieRates.Data
             modelBuilder.Entity<Categorias>().HasData(
                new Categorias { IdCategorias = 1, Nome = "Action" },
                new Categorias { IdCategorias = 2, Nome = "Comedy" },
-               new Categorias { IdCategorias = 3, Nome = "dasfew" },
+               new Categorias { IdCategorias = 3, Nome = "Classic" },
                new Categorias { IdCategorias = 4, Nome = "Thriller" },
                new Categorias { IdCategorias = 5, Nome = "Horror" },
                new Categorias { IdCategorias = 6, Nome = "Crime" },

@@ -1,0 +1,43 @@
+﻿@model IEnumerable<MovieRates.Models.FilmeCategorias>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Filme.Capa)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Categoria)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                <img style="width:200px; height:250px; border: 4px solid black; object-fit:fill;" 
+                     src="~/fotos/@Html.DisplayFor(modelItem => item.Filme.Capa)"/>
+                
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Categoria.Nome)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.IdFilmeCategorias">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.IdFilmeCategorias">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.IdFilmeCategorias">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

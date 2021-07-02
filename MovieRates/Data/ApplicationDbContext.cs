@@ -95,7 +95,27 @@ namespace MovieRates.Data
                 new FilmeCategorias { IdFilmeCategorias = 17, CategoriasFK = 17, FilmesFK = 17},
                 new FilmeCategorias { IdFilmeCategorias = 18, CategoriasFK = 18, FilmesFK = 18},
                 new FilmeCategorias { IdFilmeCategorias = 19, CategoriasFK = 19, FilmesFK = 19 },
-                new FilmeCategorias { IdFilmeCategorias = 20, CategoriasFK = 20, FilmesFK = 20 }
+                new FilmeCategorias { IdFilmeCategorias = 20, CategoriasFK = 20, FilmesFK = 20 },
+                new FilmeCategorias { IdFilmeCategorias = 21, CategoriasFK = 1, FilmesFK = 20 },
+                new FilmeCategorias { IdFilmeCategorias = 22, CategoriasFK = 2, FilmesFK = 19 },
+                new FilmeCategorias { IdFilmeCategorias = 23, CategoriasFK = 3, FilmesFK = 18 },
+                new FilmeCategorias { IdFilmeCategorias = 24, CategoriasFK = 4, FilmesFK = 17 },
+                new FilmeCategorias { IdFilmeCategorias = 25, CategoriasFK = 5, FilmesFK = 16 },
+                new FilmeCategorias { IdFilmeCategorias = 26, CategoriasFK = 6, FilmesFK = 15 },
+                new FilmeCategorias { IdFilmeCategorias = 27, CategoriasFK = 7, FilmesFK = 14 },
+                new FilmeCategorias { IdFilmeCategorias = 28, CategoriasFK = 8, FilmesFK = 13 },
+                new FilmeCategorias { IdFilmeCategorias = 29, CategoriasFK = 9, FilmesFK = 12 },
+                new FilmeCategorias { IdFilmeCategorias = 30, CategoriasFK = 10, FilmesFK = 11 },
+                new FilmeCategorias { IdFilmeCategorias = 31, CategoriasFK = 11, FilmesFK = 10 },
+                new FilmeCategorias { IdFilmeCategorias = 32, CategoriasFK = 12, FilmesFK = 9 },
+                new FilmeCategorias { IdFilmeCategorias = 33, CategoriasFK = 13, FilmesFK = 8 },
+                new FilmeCategorias { IdFilmeCategorias = 34, CategoriasFK = 14, FilmesFK = 7 },
+                new FilmeCategorias { IdFilmeCategorias = 35, CategoriasFK = 15, FilmesFK = 6 },
+                new FilmeCategorias { IdFilmeCategorias = 36, CategoriasFK = 16, FilmesFK = 5 },
+                new FilmeCategorias { IdFilmeCategorias = 37, CategoriasFK = 17, FilmesFK = 4 },
+                new FilmeCategorias { IdFilmeCategorias = 38, CategoriasFK = 18, FilmesFK = 3 },
+                new FilmeCategorias { IdFilmeCategorias = 39, CategoriasFK = 19, FilmesFK = 2 },
+                new FilmeCategorias { IdFilmeCategorias = 40, CategoriasFK = 20, FilmesFK = 1 }
 
 
 

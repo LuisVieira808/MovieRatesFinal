@@ -9,13 +9,9 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm box-shadow" style="background: #ece3f7;">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <div>
-                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index" style="background: #ece3f7;">
-                        <img style=" width: 150px; height: 40px; object-fit:fill;" src="~/fotos/logo5.PNG" title="Rev of Games" />
-                    </a>
-                </div>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">MovieRates</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -26,8 +22,14 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Filmes" asp-action="Index">Filmes</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Categorias" asp-action="Index">Categorias</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="FilmeCategorias" asp-action="Index">Categorias</a>
                         </li>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Favoritos" asp-action="Index">Favoritos</a>
+                            </li>
+                        }
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>
@@ -40,7 +42,7 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted" style="background: #ece3f7;">
+    <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2021 - MovieRates - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>

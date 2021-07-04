@@ -50,7 +50,12 @@
     <div class="form-group">
         <form asp-action="AdicionarFavoritos">
             <input type="hidden" name="IdFilmes" value="@Model.IdFilmes" />
-            <input type="submit" value="Adicionar aos Favoritos" class="btn btn-primary" />
+            @if (ViewBag.Favorito == false) {
+                <input type="submit" value="Adicionar aos Favoritos" class="btn btn-primary" />
+            } else {
+                <input type="submit" value="Remover dos Favoritos" class="btn btn-primary" />
+            }
+            
         </form>
     </div>
 

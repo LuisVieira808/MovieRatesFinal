@@ -66,6 +66,21 @@ namespace MovieRates.Controllers
             {
                 return NotFound();
             }
+            if (User.Identity.IsAuthenticated) {
+                //recolher dados do utilizador
+                var utilizador = _context.Utilizadores.Where(u => u.UserNameId == _userManager.GetUserId(User)).FirstOrDefault();
+
+                var favorito = await _context.Favoritos.Where(f => f.FilmesFK == id && f.UtilizadoresFK == utilizador.IdUtilizador).FirstOrDefaultAsync();
+
+                if (favorito == null) {
+                    ViewBag.Favorito = false;
+                } else {
+                    ViewBag.Favorito = true;
+                }
+
+            }
+
+
 
             return View(filme);
         }

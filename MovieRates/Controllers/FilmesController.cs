@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -159,6 +161,7 @@ namespace MovieRates.Controllers
         // GET: Filmes/Create
         public IActionResult Create()
         {
+            ViewBag.ListaDeCategorias = _context.ListaDeCategorias.OrderBy(c => c.Nome).ToList();
             return View();
         }
         
@@ -167,19 +170,62 @@ namespace MovieRates.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdFilmes,Titulo,Data,Capa,Realizador,Elenco,Descricao,Categoria,Link,Duracao,Pontuacao")] Filmes filmes)
+        public async Task<IActionResult> Create([Bind("IdFilmes,Titulo,Data,Capa,Realizador,Elenco,Descricao,Categoria,Link,Duracao,Pontuacao")] Filmes filmes,
+            IFormFile imgFile, int[] CategoriaEscolhida)
         {
-            //avaliar se o modelo de criação é válido, se for, adiciona o filme e a sua informaçao na Base de Dados 
-            //e redireciona para a página do Index
-            if (ModelState.IsValid)
-            {
+
+            // avalia se o array com a lista de categorias escolhidas associadas ao filme está vazio ou não
+            if (CategoriaEscolhida.Length == 0) {
+                //É gerada uma mensagem de erro
+                ModelState.AddModelError("", "É necessário selecionar pelo menos uma categoria.");
+                // gerar a lista Categorias que podem ser associadas ao filme
+                ViewBag.ListaDeCategorias = _context.ListaDeCategorias.OrderBy(c => c.Nome).ToList();
+                // devolver controlo à View
+                return View(filmes);
+            }
+
+            // criar uma lista com os objetos escolhidos das Categorias
+            List<Categorias> listaDeCategoriasEscolhidas = new List<Categorias>();
+            // Para cada objeto escolhido..
+            foreach (int item in CategoriaEscolhida) {
+                //procurar a categoria
+                Categorias Categoria = _context.ListaDeCategorias.Find(item);
+                // adicionar a Categoria à lista
+                listaDeCategoriasEscolhidas.Add(Categoria);
+            }
+
+            // adicionar a lista ao objeto de "filme"
+            filmes.ListaDeCategorias = listaDeCategoriasEscolhidas;
+
+
+
+
+
+            filmes.Capa = imgFile.FileName;
+
+            //_webhost.WebRootPath vai ter o path para a pasta wwwroot
+            var saveimg = Path.Combine(_caminho.WebRootPath, "fotos", imgFile.FileName);
+
+            var imgext = Path.GetExtension(imgFile.FileName);
+
+            if (imgext == ".JPG" || imgext == ".PNG") {
+                using (var uploadimg = new FileStream(saveimg, FileMode.Create)) {
+                    await imgFile.CopyToAsync(uploadimg);
+
+                }
+            }
+
+            if (ModelState.IsValid) {
                 _context.Add(filmes);
                 await _context.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index));
+
             }
             return View(filmes);
-        }
 
+        }
+        
         // GET: Filmes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -187,7 +233,7 @@ namespace MovieRates.Controllers
             {
                 return NotFound();
             }
-
+            ViewBag.ListaDeCategorias = _context.ListaDeCategorias.OrderBy(c => c.IdCategorias).ToList();
             var filmes = await _context.Filmes.FindAsync(id);
             if (filmes == null)
             {
@@ -201,28 +247,54 @@ namespace MovieRates.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdFilmes,Titulo,Data,Capa,Realizador,Elenco,Descricao,Categoria,Link,Duracao,Pontuacao")] Filmes filmes)
+        public async Task<IActionResult> Edit(int id, [Bind("IdFilmes,Titulo,Data,Capa,Realizador,Elenco,Descricao,Categoria,Link,Duracao,Pontuacao")] Filmes filmes,
+            IFormFile fotoFilme, int[] CategoriaEscolhida)
         {
             if (id != filmes.IdFilmes)
             {
                 return NotFound();
             }
+            if (CategoriaEscolhida.Length == 0) {
+                //É gerada uma mensagem de erro
+                ModelState.AddModelError("", "É necessário selecionar pelo menos uma categoria.");
+                // gerar a lista Categorias que podem ser associadas ao anime
+                ViewBag.ListaDeCategorias = _context.ListaDeCategorias.OrderBy(c => c.IdCategorias).ToList();
+                // devolver controlo à View
+                return View(filmes);
+            }
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
+            // criar uma lista com os objetos escolhidos das Categorias
+            List<Categorias> listaDeCategoriasEscolhidas = new List<Categorias>();
+            // Para cada objeto escolhido..
+            foreach (int item in CategoriaEscolhida) {
+                //procurar a categoria
+                Categorias Categoria = _context.ListaDeCategorias.Find(item);
+                // adicionar a Categoria à lista
+                listaDeCategoriasEscolhidas.Add(Categoria);
+            }
+
+            // adicionar a lista ao objeto de "Lesson"
+            filmes.ListaDeCategorias = listaDeCategoriasEscolhidas;
+
+            if (ModelState.IsValid) {
+                try {
                     _context.Update(filmes);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!FilmesExists(filmes.IdFilmes))
-                    {
-                        return NotFound();
+
+                    filmes.Capa = fotoFilme.FileName;
+                    //_webhost.WebRootPath vai ter o path para a pasta wwwroot
+                    var saveimg = Path.Combine(_caminho.WebRootPath, "fotos", fotoFilme.FileName);
+                    var imgext = Path.GetExtension(fotoFilme.FileName);
+
+                    if (imgext == ".jpg" || imgext == ".png") {
+                        using (var uploadimg = new FileStream(saveimg, FileMode.Create)) {
+                            await fotoFilme.CopyToAsync(uploadimg);
+                            await _context.SaveChangesAsync();
+                        }
                     }
-                    else
-                    {
+                } catch (DbUpdateConcurrencyException) {
+                    if (!FilmesExists(filmes.IdFilmes)) {
+                        return NotFound();
+                    } else {
                         throw;
                     }
                 }

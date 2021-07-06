@@ -22,7 +22,7 @@ namespace MovieRates.Controllers
         // GET: Categorias
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Categorias.ToListAsync());
+            return View(await _context.ListaDeCategorias.ToListAsync());
         }
 
         // GET: Categorias/Details/5
@@ -33,7 +33,7 @@ namespace MovieRates.Controllers
                 return NotFound();
             }
 
-            var categorias = await _context.Categorias
+            var categorias = await _context.ListaDeCategorias.Include(f => f.ListaDeFilmes)
                 .FirstOrDefaultAsync(m => m.IdCategorias == id);
             if (categorias == null)
             {
@@ -73,7 +73,7 @@ namespace MovieRates.Controllers
                 return NotFound();
             }
 
-            var categorias = await _context.Categorias.FindAsync(id);
+            var categorias = await _context.ListaDeCategorias.FindAsync(id);
             if (categorias == null)
             {
                 return NotFound();
@@ -124,7 +124,7 @@ namespace MovieRates.Controllers
                 return NotFound();
             }
 
-            var categorias = await _context.Categorias
+            var categorias = await _context.ListaDeCategorias
                 .FirstOrDefaultAsync(m => m.IdCategorias == id);
             if (categorias == null)
             {
@@ -139,15 +139,15 @@ namespace MovieRates.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var categorias = await _context.Categorias.FindAsync(id);
-            _context.Categorias.Remove(categorias);
+            var categorias = await _context.ListaDeCategorias.FindAsync(id);
+            _context.ListaDeCategorias.Remove(categorias);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool CategoriasExists(int id)
         {
-            return _context.Categorias.Any(e => e.IdCategorias == id);
+            return _context.ListaDeCategorias.Any(e => e.IdCategorias == id);
         }
     }
 }

@@ -75,52 +75,6 @@ namespace MovieRates.Data
                new Categorias { IdCategorias = 20, Nome = "Foreign Movie" }
             );
 
-            modelBuilder.Entity<FilmeCategorias>().HasData(
-                new FilmeCategorias { IdFilmeCategorias = 1, CategoriasFK = 1, FilmesFK = 1 },
-                new FilmeCategorias { IdFilmeCategorias = 2, CategoriasFK = 2, FilmesFK = 2 },
-                new FilmeCategorias { IdFilmeCategorias = 3, CategoriasFK = 3, FilmesFK = 3 },
-                new FilmeCategorias { IdFilmeCategorias = 4, CategoriasFK = 4, FilmesFK = 4 },
-                new FilmeCategorias { IdFilmeCategorias = 5, CategoriasFK = 5, FilmesFK = 5 },
-                new FilmeCategorias { IdFilmeCategorias = 6, CategoriasFK = 6, FilmesFK = 6 },
-                new FilmeCategorias { IdFilmeCategorias = 7, CategoriasFK = 7, FilmesFK = 7 },
-                new FilmeCategorias { IdFilmeCategorias = 8, CategoriasFK = 8, FilmesFK = 8 },
-                new FilmeCategorias { IdFilmeCategorias = 9, CategoriasFK = 9, FilmesFK = 9 },
-                new FilmeCategorias { IdFilmeCategorias = 10, CategoriasFK = 10, FilmesFK = 10 },
-                new FilmeCategorias { IdFilmeCategorias = 11, CategoriasFK = 11, FilmesFK = 11 },
-                new FilmeCategorias { IdFilmeCategorias = 12, CategoriasFK = 12, FilmesFK = 12 },
-                new FilmeCategorias { IdFilmeCategorias = 13, CategoriasFK = 13, FilmesFK = 13 },
-                new FilmeCategorias { IdFilmeCategorias = 14, CategoriasFK = 14, FilmesFK = 14 },
-                new FilmeCategorias { IdFilmeCategorias = 15, CategoriasFK = 15, FilmesFK = 15 },
-                new FilmeCategorias { IdFilmeCategorias = 16, CategoriasFK = 16, FilmesFK = 16 },
-                new FilmeCategorias { IdFilmeCategorias = 17, CategoriasFK = 17, FilmesFK = 17},
-                new FilmeCategorias { IdFilmeCategorias = 18, CategoriasFK = 18, FilmesFK = 18},
-                new FilmeCategorias { IdFilmeCategorias = 19, CategoriasFK = 19, FilmesFK = 19 },
-                new FilmeCategorias { IdFilmeCategorias = 20, CategoriasFK = 20, FilmesFK = 20 },
-                new FilmeCategorias { IdFilmeCategorias = 21, CategoriasFK = 1, FilmesFK = 20 },
-                new FilmeCategorias { IdFilmeCategorias = 22, CategoriasFK = 2, FilmesFK = 19 },
-                new FilmeCategorias { IdFilmeCategorias = 23, CategoriasFK = 3, FilmesFK = 18 },
-                new FilmeCategorias { IdFilmeCategorias = 24, CategoriasFK = 4, FilmesFK = 17 },
-                new FilmeCategorias { IdFilmeCategorias = 25, CategoriasFK = 5, FilmesFK = 16 },
-                new FilmeCategorias { IdFilmeCategorias = 26, CategoriasFK = 6, FilmesFK = 15 },
-                new FilmeCategorias { IdFilmeCategorias = 27, CategoriasFK = 7, FilmesFK = 14 },
-                new FilmeCategorias { IdFilmeCategorias = 28, CategoriasFK = 8, FilmesFK = 13 },
-                new FilmeCategorias { IdFilmeCategorias = 29, CategoriasFK = 9, FilmesFK = 12 },
-                new FilmeCategorias { IdFilmeCategorias = 30, CategoriasFK = 10, FilmesFK = 11 },
-                new FilmeCategorias { IdFilmeCategorias = 31, CategoriasFK = 11, FilmesFK = 10 },
-                new FilmeCategorias { IdFilmeCategorias = 32, CategoriasFK = 12, FilmesFK = 9 },
-                new FilmeCategorias { IdFilmeCategorias = 33, CategoriasFK = 13, FilmesFK = 8 },
-                new FilmeCategorias { IdFilmeCategorias = 34, CategoriasFK = 14, FilmesFK = 7 },
-                new FilmeCategorias { IdFilmeCategorias = 35, CategoriasFK = 15, FilmesFK = 6 },
-                new FilmeCategorias { IdFilmeCategorias = 36, CategoriasFK = 16, FilmesFK = 5 },
-                new FilmeCategorias { IdFilmeCategorias = 37, CategoriasFK = 17, FilmesFK = 4 },
-                new FilmeCategorias { IdFilmeCategorias = 38, CategoriasFK = 18, FilmesFK = 3 },
-                new FilmeCategorias { IdFilmeCategorias = 39, CategoriasFK = 19, FilmesFK = 2 },
-                new FilmeCategorias { IdFilmeCategorias = 40, CategoriasFK = 20, FilmesFK = 1 }
-
-
-
-            );
-
 
 
         }
@@ -129,10 +83,7 @@ namespace MovieRates.Data
         /// Representar a Tabela Filmes da BD
         /// </summary>
         public DbSet<Filmes> Filmes { get; set; }
-
-        public DbSet<Categorias> Categorias { get; set; }
-
-        public DbSet<FilmeCategorias> FilmeCategorias { get; set; }
+        public DbSet<Categorias> ListaDeCategorias { get; set; }
         public DbSet<Utilizadores> Utilizadores { get; set; }
         public DbSet<Reviews> Reviews { get; set; }
         public DbSet<Favoritos> Favoritos { get; set; }

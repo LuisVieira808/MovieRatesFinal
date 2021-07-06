@@ -16,7 +16,7 @@ namespace MovieRates.Models
         /// </summary>
         public Categorias()
         {
-            ListaDeCategorias = new HashSet<FilmeCategorias>();
+            ListaDeFilmes = new HashSet<Filmes>();
         }
         /// <summary>
         /// Identificador de categorias
@@ -32,6 +32,6 @@ namespace MovieRates.Models
         /// <summary>
         /// Lista de categorias
         /// </summary>
-        public ICollection<FilmeCategorias> ListaDeCategorias { get; set; }
+        public ICollection<Filmes> ListaDeFilmes { get; set; }
     }
 }

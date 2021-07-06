@@ -19,7 +19,7 @@ namespace MovieRates.Models
         public Filmes()
         {
             ListaDeReviews = new HashSet<Reviews>();
-            ListaDeCategorias = new HashSet<FilmeCategorias>();
+            ListaDeCategorias = new HashSet<Categorias>();
             ListaDeFavoritos = new HashSet<Favoritos>();
         }
 
@@ -44,7 +44,6 @@ namespace MovieRates.Models
         /// <summary>
         /// Capa do filme
         /// </summary>
-        [Required]
         public string Capa { get; set; }
 
         /// <summary>
@@ -83,6 +82,7 @@ namespace MovieRates.Models
         [Required]
         public double Pontuacao { get; set; }
 
+
         /// <summary>
         /// Lista das reviews dos filmes
         /// </summary>
@@ -91,7 +91,7 @@ namespace MovieRates.Models
         /// <summary>
         /// Lista de categorias dos filmes
         /// </summary>
-        public ICollection<FilmeCategorias> ListaDeCategorias { get; set; }
+        public ICollection<Categorias> ListaDeCategorias { get; set; }
 
         /// <summary>
         /// lista dos filmes favoritos

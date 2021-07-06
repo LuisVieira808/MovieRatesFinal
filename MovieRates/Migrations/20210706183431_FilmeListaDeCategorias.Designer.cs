@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MovieRates.Data;
 
 namespace MovieRates.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210706183431_FilmeListaDeCategorias")]
+    partial class FilmeListaDeCategorias
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -64,14 +66,14 @@ namespace MovieRates.Migrations
                         new
                         {
                             Id = "c",
-                            ConcurrencyStamp = "d4699077-5928-499e-adae-004976eb842f",
+                            ConcurrencyStamp = "9e0be78d-c50d-473f-b8dc-3b275ddcf7cb",
                             Name = "Cliente",
                             NormalizedName = "CLIENTE"
                         },
                         new
                         {
                             Id = "g",
-                            ConcurrencyStamp = "84830a49-38d2-43bc-b421-916fe104c4d4",
+                            ConcurrencyStamp = "4f7f4f0a-ef24-4dcf-bc3d-eb166c0f66b0",
                             Name = "Gestor",
                             NormalizedName = "GESTOR"
                         });
@@ -262,7 +264,7 @@ namespace MovieRates.Migrations
 
                     b.HasKey("IdCategorias");
 
-                    b.ToTable("ListaDeCategorias");
+                    b.ToTable("Categorias");
 
                     b.HasData(
                         new

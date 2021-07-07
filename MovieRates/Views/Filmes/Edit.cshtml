@@ -10,7 +10,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Edit" enctype="multipart/form-data" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="IdFilmes" />
             <div class="form-group">
@@ -22,11 +22,6 @@
                 <label asp-for="Data" class="control-label"></label>
                 <input asp-for="Data" class="form-control" />
                 <span asp-validation-for="Data" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Capa" class="control-label"></label>
-                <input asp-for="Capa" class="form-control" />
-                <span asp-validation-for="Capa" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Realizador" class="control-label"></label>
@@ -58,6 +53,18 @@
                 <input asp-for="Pontuacao" class="form-control" />
                 <span asp-validation-for="Pontuacao" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                <label asp-for="Capa" class="control-label"></label>
+                <input type="file" name="imgFile" class="form-control" />
+                <span asp-validation-for="Capa" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Categorias</label>
+                @foreach (Categorias item in ViewBag.ListaDeCategorias) {
+                    <br /> <input type="checkbox" value="@item.IdCategorias" name="CategoriaEscolhida" /> @item.Nome
+                }
+            </div>
+
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>

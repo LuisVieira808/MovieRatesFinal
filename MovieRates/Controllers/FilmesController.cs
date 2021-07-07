@@ -208,7 +208,7 @@ namespace MovieRates.Controllers
 
             var imgext = Path.GetExtension(imgFile.FileName);
 
-            if (imgext == ".JPG" || imgext == ".PNG") {
+            if (imgext == ".jpg" || imgext == ".png" || imgext == ".JPG" || imgext == ".PNG") {
                 using (var uploadimg = new FileStream(saveimg, FileMode.Create)) {
                     await imgFile.CopyToAsync(uploadimg);
 
@@ -248,8 +248,82 @@ namespace MovieRates.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("IdFilmes,Titulo,Data,Capa,Realizador,Elenco,Descricao,Categoria,Link,Duracao,Pontuacao")] Filmes filmes,
-            IFormFile fotoFilme, int[] CategoriaEscolhida)
+            IFormFile imgFile, int[] CategoriaEscolhida)
         {
+            if (id != filmes.IdFilmes) {
+                return NotFound();
+            }
+            // avalia se o array com a lista de categorias escolhidas associadas ao filme está vazio ou não
+            if (CategoriaEscolhida.Length == 0) {
+                //É gerada uma mensagem de erro
+                ModelState.AddModelError("", "É necessário selecionar pelo menos uma categoria.");
+                // gerar a lista Categorias que podem ser associadas ao filme
+                ViewBag.ListaDeCategorias = _context.ListaDeCategorias.OrderBy(c => c.Nome).ToList();
+                // devolver controlo à View
+                return View(filmes);
+            }
+
+            // criar uma lista com os objetos escolhidos das Categorias
+            List<Categorias> listaDeCategoriasEscolhidas = new List<Categorias>();
+            // Para cada objeto escolhido..
+            foreach (int item in CategoriaEscolhida) {
+                //procurar a categoria
+                Categorias Categoria = _context.ListaDeCategorias.Find(item);
+                // adicionar a Categoria à lista
+                listaDeCategoriasEscolhidas.Add(Categoria);
+            }
+
+            // adicionar a lista ao objeto de "filme"
+            filmes.ListaDeCategorias = listaDeCategoriasEscolhidas;
+
+
+
+
+
+            filmes.Capa = imgFile.FileName;
+
+            //_webhost.WebRootPath vai ter o path para a pasta wwwroot
+            var saveimg = Path.Combine(_caminho.WebRootPath, "fotos", imgFile.FileName);
+
+            var imgext = Path.GetExtension(imgFile.FileName);
+
+            if (imgext == ".jpg" || imgext == ".png" || imgext == ".JPG" || imgext == ".PNG") {
+                using (var uploadimg = new FileStream(saveimg, FileMode.Create)) {
+                    await imgFile.CopyToAsync(uploadimg);
+
+                }
+            }
+
+            //if (ModelState.IsValid) {
+                _context.Update(filmes);
+                await _context.SaveChangesAsync();
+
+                return RedirectToAction(nameof(Index));
+
+            //}
+            //return View(filmes);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            /*
             if (id != filmes.IdFilmes)
             {
                 return NotFound();
@@ -275,22 +349,23 @@ namespace MovieRates.Controllers
 
             // adicionar a lista ao objeto de "Lesson"
             filmes.ListaDeCategorias = listaDeCategoriasEscolhidas;
+            filmes.Capa = imgFile.FileName;
+            //_webhost.WebRootPath vai ter o path para a pasta wwwroot
+            var saveimg = Path.Combine(_caminho.WebRootPath, "fotos", imgFile.FileName);
+
+            var imgext = Path.GetExtension(imgFile.FileName);
+
+            if (imgext == ".jpg" || imgext == ".png" || imgext == ".JPG" || imgext == ".PNG") {
+                using (var uploadimg = new FileStream(saveimg, FileMode.Create)) {
+                    await imgFile.CopyToAsync(uploadimg);
+
+                }
+            }
 
             if (ModelState.IsValid) {
                 try {
                     _context.Update(filmes);
-
-                    filmes.Capa = fotoFilme.FileName;
-                    //_webhost.WebRootPath vai ter o path para a pasta wwwroot
-                    var saveimg = Path.Combine(_caminho.WebRootPath, "fotos", fotoFilme.FileName);
-                    var imgext = Path.GetExtension(fotoFilme.FileName);
-
-                    if (imgext == ".jpg" || imgext == ".png") {
-                        using (var uploadimg = new FileStream(saveimg, FileMode.Create)) {
-                            await fotoFilme.CopyToAsync(uploadimg);
-                            await _context.SaveChangesAsync();
-                        }
-                    }
+                    await _context.SaveChangesAsync();
                 } catch (DbUpdateConcurrencyException) {
                     if (!FilmesExists(filmes.IdFilmes)) {
                         return NotFound();
@@ -300,7 +375,7 @@ namespace MovieRates.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(filmes);
+            return View(filmes);*/
         }
 
         // GET: Filmes/Delete/5

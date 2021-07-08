@@ -280,29 +280,39 @@ namespace MovieRates.Controllers
 
 
 
+            /**************************************************/
+            if (imgFile !=null) {
+                filmes.Capa = imgFile.FileName;
 
-            filmes.Capa = imgFile.FileName;
+                //_webhost.WebRootPath vai ter o path para a pasta wwwroot
+                var saveimg = Path.Combine(_caminho.WebRootPath, "fotos", imgFile.FileName);
 
-            //_webhost.WebRootPath vai ter o path para a pasta wwwroot
-            var saveimg = Path.Combine(_caminho.WebRootPath, "fotos", imgFile.FileName);
+                var imgext = Path.GetExtension(imgFile.FileName);
 
-            var imgext = Path.GetExtension(imgFile.FileName);
+                if (imgext == ".jpg" || imgext == ".png" || imgext == ".JPG" || imgext == ".PNG") {
+                    using (var uploadimg = new FileStream(saveimg, FileMode.Create)) {
+                        await imgFile.CopyToAsync(uploadimg);
 
-            if (imgext == ".jpg" || imgext == ".png" || imgext == ".JPG" || imgext == ".PNG") {
-                using (var uploadimg = new FileStream(saveimg, FileMode.Create)) {
-                    await imgFile.CopyToAsync(uploadimg);
-
+                    }
                 }
-            }
+            } else {
+                Filmes filmes1 = _context.Filmes.Find(filmes.IdFilmes);
 
-            //if (ModelState.IsValid) {
+                _context.Entry<Filmes>(filmes1).State = EntityState.Detached;
+
+
+                filmes.Capa = filmes1.Capa;
+            }
+            
+            /***************************************************/
+            if (ModelState.IsValid) {
                 _context.Update(filmes);
                 await _context.SaveChangesAsync();
 
                 return RedirectToAction(nameof(Index));
 
-            //}
-            //return View(filmes);
+            }
+            return View(filmes);
 
 
 

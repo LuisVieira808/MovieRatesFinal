@@ -33,8 +33,8 @@
 
         <b>Categories: </b>
         @foreach (var item in Model.ListaDeCategorias) {
-            <a asp-controller="Categorias" asp-action="Details" asp-route-id="@item.IdCategorias" style="margin-right:5px;">@item.Nome</a><br />
-        }
+            <a asp-controller="Categorias" asp-action="Details" asp-route-id="@item.IdCategorias" style="margin-right:5px;">@item.Nome</a>
+        }<br />
 
         <b> Sinopse:</b>
         @Html.DisplayFor(model => model.Descricao)<br /> <br /><br /> <br />

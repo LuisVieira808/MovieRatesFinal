@@ -3,30 +3,28 @@
 @{
     ViewData["Title"] = "Details";
 }
-@if (User.IsInRole("Gestor")) {
-<h1>Details</h1>
 
-<div>
-    <h4>Categorias</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Nome)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Nome)
-        </dd>
-    </dl>
-</div>
+<h1>@Model.Nome</h1>
 
-<div>
-    @foreach(var item in Model.ListaDeFilmes) {
-        @item.Titulo;
-     }
-</div>
+    <div>
+        @foreach (var item in Model.ListaDeFilmes) {
+            <div class="Filme">
+                <a asp-action="Details" asp-controller="Filmes" asp-route-id="@item.IdFilmes">
+                    <img class="FotoFilme" src="~/fotos/@Html.DisplayFor(modelItem => item.Capa)" />
+                    <div class="overlay">
+                        <div class="text">
+                            @Html.DisplayFor(modelItem => item.Titulo)
+                        </div>
+                    </div>
+                </a>
+            </div>
+        }
+    </div>
+    <br />
 
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.IdCategorias">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
-}
+    <div>
+        @if (User.IsInRole("Gestor")) {
+            <a asp-action="Edit" asp-route-id="@Model.IdCategorias">Edit</a>
+        }
+        <a asp-action="Index">Voltar</a>
+    </div>

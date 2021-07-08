@@ -63,6 +63,7 @@ namespace MovieRates.Controllers
                 .Include(f => f.ListaDeReviews)
                 .ThenInclude(r => r.Utilizador)
                 .OrderByDescending(f => f.Data)
+                .Include(fc => fc.ListaDeCategorias)
                 .FirstOrDefaultAsync();
             if (filme == null)
             {
@@ -161,7 +162,7 @@ namespace MovieRates.Controllers
         // GET: Filmes/Create
         public IActionResult Create()
         {
-            ViewBag.ListaDeCategorias = _context.ListaDeCategorias.OrderBy(c => c.Nome).ToList();
+            ViewBag.ListaDeCategorias = _context.ListaDeCategorias.OrderBy(c => c.IdCategorias).ToList();
             return View();
         }
         
@@ -179,7 +180,7 @@ namespace MovieRates.Controllers
                 //É gerada uma mensagem de erro
                 ModelState.AddModelError("", "É necessário selecionar pelo menos uma categoria.");
                 // gerar a lista Categorias que podem ser associadas ao filme
-                ViewBag.ListaDeCategorias = _context.ListaDeCategorias.OrderBy(c => c.Nome).ToList();
+                ViewBag.ListaDeCategorias = _context.ListaDeCategorias.OrderBy(c => c.IdCategorias).ToList();
                 // devolver controlo à View
                 return View(filmes);
             }
@@ -258,7 +259,7 @@ namespace MovieRates.Controllers
                 //É gerada uma mensagem de erro
                 ModelState.AddModelError("", "É necessário selecionar pelo menos uma categoria.");
                 // gerar a lista Categorias que podem ser associadas ao filme
-                ViewBag.ListaDeCategorias = _context.ListaDeCategorias.OrderBy(c => c.Nome).ToList();
+                ViewBag.ListaDeCategorias = _context.ListaDeCategorias.OrderBy(c => c.IdCategorias).ToList();
                 // devolver controlo à View
                 return View(filmes);
             }

@@ -4,41 +4,21 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Index</h1><br />
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Utilizador)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Filme)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
+
 @foreach (var item in Model) {
     if (item.Utilizador.Email == User.Identity.Name) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Utilizador.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Filme.Capa)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.IdFavoritos">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.IdFavoritos">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.IdFavoritos">Delete</a>
-            </td>
-        </tr>
+        <div class="Filme">
+            <a asp-action="Details" asp-controller="Filmes" asp-route-id="@item.Filme.IdFilmes">
+                <img class="FotoFilme" src="~/fotos/@Html.DisplayFor(modelItem => item.Filme.Capa)" />
+                <div class="overlay">
+                    <div class="text">
+                        @Html.DisplayFor(modelItem => item.Filme.Titulo)
+                    </div>
+                </div>
+            </a>
+        </div>
     }
         
 }
-    </tbody>
-</table>

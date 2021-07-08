@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace MovieRates.Models
 {
     /// <summary>
-    /// Diferentes tipos de categorias de Filmes
+    /// Diferentes tipos de categorias de Filmes 
     /// </summary>
     public class Categorias
     {

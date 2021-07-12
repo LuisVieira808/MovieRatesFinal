@@ -3,7 +3,7 @@
 @{ ViewData["Title"] = "Index"; }
 
 
-@if (User.IsInRole("Gestor") || User.IsInRole("Cliente")) {
+@if (User.IsInRole("Gestor")) {
 <h1>Index</h1>
 <p>
     <a asp-action="Create">Create New</a>

@@ -104,7 +104,10 @@ namespace MovieRates.Controllers
             //recolher dados do utilizador
             var utilizador = _context.Utilizadores.Where(u => u.UserNameId == _userManager.GetUserId(User)).FirstOrDefault();
 
-            if (utilizador.ControlarReview == false) {
+            // será que este user já fez um comentário sobre este filme?
+            var oldComentario = await _context.Reviews.Where(r => r.Utilizador == utilizador && r.FilmesFK == IdFilmes).FirstOrDefaultAsync();
+
+            if (oldComentario == null) {
                 //variavel que contem os dados da review, do utilizador e sobre qual filme foi feita review
                 var comment = new Reviews {
                 FilmesFK = IdFilmes,

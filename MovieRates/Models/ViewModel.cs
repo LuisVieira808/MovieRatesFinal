@@ -26,5 +26,31 @@ namespace MovieRates.Models
         /// Pontuação do filme
         /// </summary>
         public double Pontuacao { get; set; }
+
+        /// <summary>
+        /// Nome do Realizador
+        /// </summary>
+        public string Realizador { get; set; }
+
+
+        /// <summary>
+        /// Link da Stream
+        /// </summary>
+        public string Link { get; set; }
+
+        /// <summary>
+        /// Breve descrição sobre o filme
+        /// </summary>
+        public string Descricao { get; set; }
+
+        /// <summary>
+        /// Duração do filme
+        /// </summary>
+        public string Duracao { get; set; }
+
+        /// <summary>
+        /// Nome do Elenco
+        /// </summary>
+        public string Elenco { get; set; }
     }
 }

@@ -116,6 +116,9 @@ namespace MovieRates.Controllers
             {
                 try
                 {
+                    if (reviews.Visibilidade) {
+                        reviews.Visibilidade = true;
+                    }
                     _context.Update(reviews);
                     await _context.SaveChangesAsync();
                 }
@@ -130,7 +133,7 @@ namespace MovieRates.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Details), "Filmes", new {id = reviews.FilmesFK});
             }
             ViewData["FilmesFK"] = new SelectList(_context.Filmes, "IdFilmes", "Capa", reviews.FilmesFK);
             ViewData["UtilizadoresFK"] = new SelectList(_context.Utilizadores, "IdUtilizador", "Email", reviews.UtilizadoresFK);

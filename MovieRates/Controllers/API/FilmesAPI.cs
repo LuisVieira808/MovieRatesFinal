@@ -31,7 +31,12 @@ namespace MovieRates.Controllers.API {
                     IdFilmes = f.IdFilmes,
                     Titulo = f.Titulo,
                     Pontuacao = f.Pontuacao,
-                    Capa = f.Capa
+                    Capa = f.Capa,
+                    Realizador = f.Realizador,
+                    Elenco = f.Elenco,
+                    Duracao = f.Duracao,
+                    Link = f.Link,
+                    Descricao = f.Descricao
                 })
                 .OrderBy(f => f.IdFilmes)
                 .ToListAsync();
